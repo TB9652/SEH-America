@@ -33,6 +33,21 @@ namespace SEH_America
 
             //Add a blank slide to the presentation
             ISlide slide = powerpointDoc.Slides.Add(SlideLayoutType.Blank);
+
+            //Add a textbox to the slide
+            IShape shape = slide.AddTextBox(400, 100, 500, 100);
+
+            //Add a text to the textbox.
+            shape.TextBody.AddParagraph("Hello World!!!");
+
+            //Save the PowerPoint presentation
+            powerpointDoc.Save("Sample.pptx");
+
+            //Close the PowerPoint presentation
+            powerpointDoc.Close();
+
+            //Open the PowerPoint presentation
+            System.Diagnostics.Process.Start("Sample.pptx");
         }
     }
 }
