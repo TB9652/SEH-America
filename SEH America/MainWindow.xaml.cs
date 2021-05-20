@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,15 @@ namespace SEH_America
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnCreatePowerPoint_Click(object sender, RoutedEventArgs e)
+        {
+            //Create a new PowerPoint presentation
+            IPresentation powerpointDoc = Presentation.Create();
+
+            //Add a blank slide to the presentation
+            ISlide slide = powerpointDoc.Slides.Add(SlideLayoutType.Blank);
         }
     }
 }
