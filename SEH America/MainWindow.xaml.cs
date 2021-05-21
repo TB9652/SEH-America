@@ -1,4 +1,5 @@
 ﻿using Syncfusion.Presentation;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,8 @@ namespace SEH_America
             IShape shape = slide.AddTextBox(400, 100, 500, 100);
 
             //Add a text to the textbox.
-            shape.TextBody.AddParagraph("Hello World!!!");
+            shape.TextBody.AddParagraph(titleAreaText.Text);
+            shape.TextBody.AddParagraph(textAreaText.Text);
 
             //Save the PowerPoint presentation
             powerpointDoc.Save("Sample.pptx");
@@ -51,3 +53,44 @@ namespace SEH_America
         }
     }
 }
+
+namespace BingSearchApisQuickstart
+{
+    class Program
+    {
+        // Replace the this string with your valid access key.
+        const string subscriptionKey = "enter your key here";
+        const string uriBase = "https://api.cognitive.microsoft.com/bing/v7.0/images/search";
+        const string searchTerm = "tropical ocean";
+
+        struct SearchResult
+        {
+            public String jsonResult;
+            public Dictionary<String, String> relevantHeaders;
+        }
+        static SearchResult BingImageSearch(string searchTerm)
+        {
+            var uriQuery = uriBase + "?q=" + Uri.EscapeDataString(SearchTerm);
+            WebRequest request = WebRequest.Create(uriQuery);
+            request.Headers["Ocp-Apim-Subscription-Key"] = subscriptionKey;
+            HttpWebResponse response = (HttpWebResponse)request.GetResponseAsync().Result;
+            string json = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+            // Create the result object for return
+            var searchResult = new SearchResult()
+            {
+                jsonResult = json,
+                relevantHeaders = new Dictionary<String, String>()
+            };
+
+            // Extract Bing HTTP headers
+            foreach (String header in response.Headers)
+            {
+                if (header.StartsWith("BingAPIs-") || header.StartsWith("X-MSEdge-"))
+                    searchResult.relevantHeaders[header] = response.Headers[header];
+            }
+            return searchResult;
+        }
+    }
+}
+
