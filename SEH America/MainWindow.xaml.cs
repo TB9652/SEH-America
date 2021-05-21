@@ -58,7 +58,7 @@ namespace BingSearchApisQuickstart
 {
     class Program
     {
-        // Replace the this string with your valid access key.
+        // Replace the this string with valid access key.
         const string subscriptionKey = "enter your key here";
         const string uriBase = "https://api.cognitive.microsoft.com/bing/v7.0/images/search";
         const string searchTerm = "tropical ocean";
