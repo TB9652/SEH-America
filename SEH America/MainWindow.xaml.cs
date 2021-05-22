@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
 
 namespace SEH_America
 {
@@ -37,9 +38,10 @@ namespace SEH_America
 
             //Add a textbox to the slide
             IShape shape = slide.AddTextBox(400, 100, 500, 100);
+            shape.TextBody.AddParagraph(titleAreaText.Text);
 
             //Add a text to the textbox.
-            shape.TextBody.AddParagraph(titleAreaText.Text);
+            //shape.TextBody.AddParagraph(titleAreaText.Text);
             shape.TextBody.AddParagraph(textAreaText.Text);
 
             //Save the PowerPoint presentation
@@ -70,7 +72,7 @@ namespace BingSearchApisQuickstart
         }
         static SearchResult BingImageSearch(string searchTerm)
         {
-            var uriQuery = uriBase + "?q=" + Uri.EscapeDataString(SearchTerm);
+            var uriQuery = uriBase + "?q=" + Uri.EscapeDataString(searchTerm);
             WebRequest request = WebRequest.Create(uriQuery);
             request.Headers["Ocp-Apim-Subscription-Key"] = subscriptionKey;
             HttpWebResponse response = (HttpWebResponse)request.GetResponseAsync().Result;
